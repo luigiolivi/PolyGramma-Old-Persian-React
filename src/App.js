@@ -1,6 +1,6 @@
 import { useState } from "react";
 
-import { Container, ChallengeLetter, ScoreP, ButtonsOptions } from "./styles";
+import { Container, ChallengeLetter, ScoreP, ButtonsOptions, ContainerButtons, ContainerChallengeLetter} from "./styles";
 
 const letters = [
   { a: "𐎠" },
@@ -41,84 +41,79 @@ const letters = [
   { h: "𐏃" }
 ]
 
-
-
 const App = () => {
+  const generateRandomIndex = () => {
+    const random = Math.floor(Math.random() * 36)
 
-    const generateRandomIndex = () => {
-      const random = Math.floor(Math.random() * 36)
-  
-      return random
-    }
-  
-    const getLetterByIndex = (index) => {
-      const letter = (Object.values(letters[index]))
-  
-      return letter.toString().trim()
-    }
-  
-    const getKeyByIndex = (index) => {
-      const transliteration = Object.keys(letters[index])
-  
-      return transliteration.toString().trim()
-    }
-  
-    const correctAnswer = () => {
+    return random
+  }
+
+  const getLetterByIndex = (index) => {
+    const letter = (Object.values(letters[index]))
+
+    return letter.toString().trim()
+  }
+
+  const getKeyByIndex = (index) => {
+    const transliteration = Object.keys(letters[index])
+
+    return transliteration.toString().trim()
+  }
+
+
+  const checkAnswer = (index) => {
+    if (index === randomCorrectButton) {
       setScore(score + 1)
-      console.log('correto')
     }
-  
-    const incorrectAnswer = () => {
-      if (score === 0) {
 
-      }
+    else
+      if (score === 0) setReiniciar(!reiniciar)
       else setScore(0)
-      console.log('incorreto')
+  }
+
+  let [score, setScore] = useState(0)
+  let [reiniciar, setReiniciar] = useState(false)
+
+  const challengeIndex = generateRandomIndex()
+  const challengeLetter = getLetterByIndex(challengeIndex)
+  const challengeKey = getKeyByIndex(challengeIndex)
+
+  console.log(challengeKey)
+  let randomCorrectButton = Math.floor(Math.random() * 4)
+
+  let options = []
+  for (let i = 0; i < 3; i++) {
+    while (options[i] == null) {
+      let randomKey = getKeyByIndex(generateRandomIndex())
+
+      if (randomKey === challengeKey || options.includes(randomKey)) continue
+      else options.push(randomKey)
     }
-  
-    let [score, setScore] = useState(0)
-  
-    const challengeIndex = generateRandomIndex()
-    const challengeLetter = getLetterByIndex(challengeIndex)
-    const challengeKey = getKeyByIndex(challengeIndex)
-  
-    console.log(challengeKey)
-    let randomCorrectButton = Math.floor(Math.random() * 4)
-  
-    let options = []
-    for (let i = 0; i < 3; i++) {
-      while (options[i] == null) {
-        let randomKey = getKeyByIndex(generateRandomIndex())
-  
-        if (randomKey === challengeKey || options.includes(randomKey)) continue
-        else options.push(randomKey)
-      }
-    }
-  
-    let buttons = []
-    for (let i = 0; i < 4; i++) {
-      if (i === randomCorrectButton) {
-        buttons.push(<ButtonsOptions onClick={correctAnswer} key={i}>{challengeKey}</ButtonsOptions>)
-  
-        continue
-      }
-  
-      buttons.push(<ButtonsOptions onClick={incorrectAnswer} key={i}>{options.pop()}</ButtonsOptions>)
-    }
-    
-    
-    return (
-      <Container>
+  }
+
+  options.splice((randomCorrectButton), 0, challengeKey)
+
+  return (
+    <Container>
+      <ContainerChallengeLetter>
         <ChallengeLetter>{challengeLetter}</ChallengeLetter>
-  
-        {buttons}
-  
-        <ScoreP>Score: {score}</ScoreP>
-        <ScoreP>Record: 0</ScoreP>
-      </Container>
-    )
-  
-  
+      </ContainerChallengeLetter>
+
+
+      <ContainerButtons>
+        <ButtonsOptions onClick={function click() { checkAnswer(0) }}>{options[0]}</ButtonsOptions>
+        <ButtonsOptions onClick={function click() { checkAnswer(1) }}>{options[1]}</ButtonsOptions>
+        <ButtonsOptions onClick={function click() { checkAnswer(2) }}>{options[2]}</ButtonsOptions>
+        <ButtonsOptions onClick={function click() { checkAnswer(3) }}>{options[3]}</ButtonsOptions>
+      </ContainerButtons>
+
+
+      <ScoreP>Score: {score}</ScoreP>
+      <ScoreP>Record: 0</ScoreP>
+    </Container>
+  )
+
+
 
 
 }
