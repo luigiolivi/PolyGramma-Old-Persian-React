@@ -62,7 +62,7 @@ const App = () => {
 
 
   const checkAnswer = (index) => {
-    if (index === randomCorrectButton) {
+    if (index === randomIndexCorrectButton) {
       setScore(score + 1)
     }
 
@@ -82,19 +82,20 @@ const App = () => {
   const challengeKey = getKeyByIndex(challengeIndex)
 
   console.log(challengeKey)
-  let randomCorrectButton = Math.floor(Math.random() * 4)
+  let randomIndexCorrectButton = Math.floor(Math.random() * 4)
 
   let options = []
-  for (let i = 0; i < 3; i++) {
+
+  options[randomIndexCorrectButton] = <ButtonsOptions onClick={function click() { checkAnswer(randomIndexCorrectButton) }}>{challengeKey}</ButtonsOptions>
+
+  for (let i = 0; i < 4; i++) {
     while (options[i] == null) {
       let randomKey = getKeyByIndex(generateRandomIndex())
 
       if (randomKey === challengeKey || options.includes(randomKey)) continue
-      else options.push(randomKey)
+      else options[i] = (<ButtonsOptions onClick={function click() { checkAnswer(i) }}  >{randomKey}</ButtonsOptions>)
     }
   }
-
-  options.splice((randomCorrectButton), 0, challengeKey)
 
   return (
     <Container>
@@ -104,10 +105,7 @@ const App = () => {
 
 
       <ContainerButtons>
-        <ButtonsOptions onClick={function click() { checkAnswer(0) }}>{options[0]}</ButtonsOptions>
-        <ButtonsOptions onClick={function click() { checkAnswer(1) }}>{options[1]}</ButtonsOptions>
-        <ButtonsOptions onClick={function click() { checkAnswer(2) }}>{options[2]}</ButtonsOptions>
-        <ButtonsOptions onClick={function click() { checkAnswer(3) }}>{options[3]}</ButtonsOptions>
+        {options}
       </ContainerButtons>
 
 
