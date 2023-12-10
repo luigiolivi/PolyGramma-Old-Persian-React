@@ -73,6 +73,9 @@ const App = () => {
 
   let [score, setScore] = useState(0)
   let [reiniciar, setReiniciar] = useState(false)
+  let [record, setRecord] = useState(0)
+
+  if (score > record) setRecord(score)
 
   const challengeIndex = generateRandomIndex()
   const challengeLetter = getLetterByIndex(challengeIndex)
@@ -109,7 +112,7 @@ const App = () => {
 
 
       <ScoreP>Score: {score}</ScoreP>
-      <ScoreP>Record: 0</ScoreP>
+      <ScoreP>Record: {record}</ScoreP>
     </Container>
   )
 

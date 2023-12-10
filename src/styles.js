@@ -22,6 +22,17 @@ export const ButtonsOptions = styled.button`
     margin: 0 auto;
     border: solid 0.1vh black;
     border-radius: 2vh;
+    background-color: white;
+
+    &:hover {
+        background-color: #F5F5F5;
+
+        cursor: pointer;
+    }
+
+    &:active {
+
+    }
 `
 
 export const ScoreP = styled.p`
@@ -29,7 +40,7 @@ export const ScoreP = styled.p`
 `
 
 export const ContainerButtons = styled.div`
-    width: 100%;
+    width: 95%;
     display: grid;
     grid-template-columns: 45% 45%;
     row-gap: 2vh;
