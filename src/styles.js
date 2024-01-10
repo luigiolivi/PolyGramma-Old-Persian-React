@@ -29,10 +29,6 @@ export const ButtonsOptions = styled.button`
 
         cursor: pointer;
     }
-
-    &:active {
-
-    }
 `
 
 export const ScoreP = styled.p`

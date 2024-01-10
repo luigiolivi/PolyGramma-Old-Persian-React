@@ -60,7 +60,6 @@ const App = () => {
     return transliteration.toString().trim()
   }
 
-
   const checkAnswer = (index) => {
     if (index === randomIndexCorrectButton) {
       setScore(score + 1)
